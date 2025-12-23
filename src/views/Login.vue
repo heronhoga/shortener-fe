@@ -57,7 +57,7 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-50">
-    <div class="w-full max-w-md bg-white rounded-xl shadow p-8">
+    <div class="p-10">
       <h2 class="text-3xl font-extrabold text-gray-900 text-center">Login</h2>
 
       <p class="mt-2 text-center text-gray-600">Sign in to continue to <strong>Snipe</strong></p>
