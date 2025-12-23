@@ -62,7 +62,7 @@ onMounted(() => {
 
       <p class="mt-2 text-center text-gray-600">Sign in to continue to <strong>Snipe</strong></p>
 
-      <form class="mt-6 space-y-4" @submit.prevent="handleLogin">
+      <form class="mt-6 space-y-4 text-gray-900" @submit.prevent="handleLogin">
         <div>
           <label class="block text-sm font-medium text-gray-700"> Email </label>
           <input
