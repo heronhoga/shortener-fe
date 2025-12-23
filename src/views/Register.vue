@@ -101,7 +101,7 @@ const handleRegister = async () => {
         <!-- password and confirmation -->
         <div>
           <label class="block text-sm font-medium text-gray-700">
-            Password (At least 8 chars, 1 letter and 1 number)
+            Password <span class="text-[10px]">(At least 8 chars, 1 letter and 1 number)</span>
           </label>
           <input
             v-model="form.password"
