@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { login, loginWithGoogle } from '@/services/auth.services'
 
@@ -16,13 +16,33 @@ const handleLogin = async () => {
   try {
     await login(form)
     router.push('/')
-  } catch (err) {
-    console.error(err)
   } finally {
     loading.value = false
   }
 }
+
+const handleGoogleCredential = async (response) => {
+  try {
+    await loginWithGoogle(response.credential)
+    router.push('/')
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+onMounted(() => {
+  google.accounts.id.initialize({
+    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    callback: handleGoogleCredential,
+  })
+
+  google.accounts.id.renderButton(
+    document.getElementById('google-btn'),
+    { theme: 'outline', size: 'large', width: 320 }
+  )
+})
 </script>
+
 
 
 <template>
@@ -80,19 +100,8 @@ const handleLogin = async () => {
       </div>
 
       <!-- Google Auth -->
-      <button
-        @click="loginWithGoogle"
-        class="w-full flex items-center justify-center gap-3 py-3 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
-      >
-        <img
-          src="https://www.svgrepo.com/show/475656/google-color.svg"
-          alt="Google"
-          class="w-5 h-5"
-        />
-        <span class="font-medium text-gray-700">
-          Continue with Google
-        </span>
-      </button>
+      <div id="google-btn" class="w-full flex justify-center"></div>
+
 
       <p class="mt-6 text-center text-sm text-gray-600">
         Don’t have an account?

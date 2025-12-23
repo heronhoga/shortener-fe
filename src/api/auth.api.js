@@ -1,9 +1,12 @@
 import api from './index'
 
 export const loginApi = (payload) => {
-  return api.post('/auth/login', payload)
+  return api.post('/users/login', payload)
 }
 
-export const googleRedirectUrl = () => {
-  return `${import.meta.env.VITE_API_URL}/auth/google`
+export const loginWithGoogleApi = (googleToken) => {
+  return api.post('/users/login', {
+    provider: 'google',
+    token: googleToken,
+  })
 }
