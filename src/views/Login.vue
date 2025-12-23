@@ -3,10 +3,12 @@ import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { login, loginWithGoogle } from '@/services/auth.services'
 import { isValidEmail } from '@/utils/validator'
+import { useNotificationStore } from '@/stores/notification'
 
 const router = useRouter()
 const loading = ref(false)
 const error = ref('')
+const notify = useNotificationStore() //notification
 
 const form = reactive({
   email: '',
@@ -24,9 +26,11 @@ const handleLogin = async () => {
   loading.value = true
   try {
     await login(form)
-    router.push('/')
+    notify.show('Login Successful', 'success')
+    router.push('/links')
   } catch (e) {
     error.value = 'Invalid email or password'
+    notify.show('Invalid email or password', 'error')
   } finally {
     loading.value = false
   }
@@ -35,9 +39,11 @@ const handleLogin = async () => {
 const handleGoogleCredential = async (response) => {
   try {
     await loginWithGoogle(response.credential)
+    notify.show('Login Successful', 'success')
     router.push('/links')
   } catch (e) {
     console.error(e)
+    notify.show('Invalid email or password', 'error')
   }
 }
 
