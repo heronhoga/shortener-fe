@@ -2,11 +2,9 @@
 import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { login, loginWithGoogle } from '@/services/auth.services'
-import { isValidEmail } from '@/utils/validator'
 
 const router = useRouter()
 const loading = ref(false)
-const error = ref('')
 
 const form = reactive({
   email: '',
@@ -14,53 +12,24 @@ const form = reactive({
 })
 
 const handleLogin = async () => {
-  error.value = ''
-
-  if (!isValidEmail(form.email)) {
-    error.value = 'Please enter a valid email address'
-    return
-  }
-
   loading.value = true
   try {
     await login(form)
     router.push('/')
-  } catch (e) {
-    error.value = 'Invalid email or password'
   } finally {
     loading.value = false
   }
 }
-
-const handleGoogleCredential = async (response) => {
-  try {
-    await loginWithGoogle(response.credential)
-    router.push('/')
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-onMounted(() => {
-  google.accounts.id.initialize({
-    client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-    callback: handleGoogleCredential
-  })
-
-  google.accounts.id.renderButton(document.getElementById('google-btn'), {
-    theme: 'outline',
-    size: 'large',
-    width: 320
-  })
-})
 </script>
 
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-50">
     <div class="w-full max-w-md bg-white rounded-xl shadow p-8">
-      <h2 class="text-3xl font-extrabold text-gray-900 text-center">Login</h2>
+      <h2 class="text-3xl font-extrabold text-gray-900 text-center">Register</h2>
 
-      <p class="mt-2 text-center text-gray-600">Sign in to continue to <strong>Snipe</strong></p>
+      <p class="mt-2 text-center text-gray-600">
+        Register yourself to be part of <strong>Snipe</strong>
+      </p>
 
       <form class="mt-6 space-y-4" @submit.prevent="handleLogin">
         <div>
@@ -69,14 +38,9 @@ onMounted(() => {
             v-model="form.email"
             type="email"
             required
-            class="mt-1 p-2 w-full rounded-lg border focus:ring-slate-500 focus:border-slate-500"
-            :class="error ? 'border-red-500' : 'border-gray-300'"
+            class="mt-1 p-2 w-full rounded-lg border-gray-300 focus:border-slate-500 focus:ring-slate-500"
             placeholder="you@example.com"
           />
-
-          <p v-if="error" class="text-sm text-red-600 mt-2">
-            {{ error }}
-          </p>
         </div>
 
         <div>
@@ -85,8 +49,7 @@ onMounted(() => {
             v-model="form.password"
             type="password"
             required
-            class="mt-1 p-2 w-full rounded-lg border focus:ring-slate-500 focus:border-slate-500"
-            :class="error ? 'border-red-500' : 'border-gray-300'"
+            class="mt-1 p-2 w-full rounded-lg border-gray-300 focus:border-slate-500 focus:ring-slate-500"
             placeholder="••••••••"
           />
         </div>
@@ -111,9 +74,9 @@ onMounted(() => {
       <div id="google-btn" class="w-full flex justify-center"></div>
 
       <p class="mt-6 text-center text-sm text-gray-600">
-        Don’t have an account?
-        <router-link to="/register" class="text-slate-600 font-medium hover:underline">
-          Register
+        Already have an account?
+        <router-link to="/login" class="text-slate-600 font-medium hover:underline">
+          Login
         </router-link>
       </p>
     </div>
