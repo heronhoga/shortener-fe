@@ -10,3 +10,7 @@ export const loginWithGoogleApi = (googleToken) => {
     token: googleToken,
   })
 }
+
+export const registerApi = (payload) => {
+  return api.post('/users/register', payload)
+}

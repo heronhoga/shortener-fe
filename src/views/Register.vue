@@ -1,11 +1,19 @@
 <script setup>
-import { isEqualPassword, isValidEmail, isValidPassword, isValidPhoneNumber } from '@/utils/validator'
+import { register } from '@/services/auth.services'
+import { useNotificationStore } from '@/stores/notification'
+import {
+  isEqualPassword,
+  isValidEmail,
+  isValidPassword,
+  isValidPhoneNumber
+} from '@/utils/validator'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const loading = ref(false)
 const error = ref('')
+const notify = useNotificationStore()
 
 const form = reactive({
   email: '',
@@ -34,14 +42,28 @@ const handleRegister = async () => {
     return
   }
 
-  if (!isEqualPassword(form.password, confirmPassword)) {
+  if (!isEqualPassword(form.password, confirmPassword.value)) {
     error.value = 'New Password and Confirmation Password must be equal'
+    return
   }
 
   loading.value = true
+
   try {
-    await register(form)
-    router.push('/')
+    const response = await register(form)
+
+    notify.show('Registration successful, please log in', 'success')
+    router.push('/login')
+  } catch (e) {
+    const backendError = e.response?.data?.error
+
+    if (backendError === 'There is existing user with the email/username') {
+      notify.show('User already exists', 'error')
+      error.value = 'User already exists'
+    } else {
+      notify.show('Registration failed', 'error')
+      error.value = 'Registration failed'
+    }
   } finally {
     loading.value = false
   }
@@ -59,9 +81,10 @@ const handleRegister = async () => {
 
       <form class="mt-6 space-y-4 text-gray-900" @submit.prevent="handleRegister">
         <div>
-          <p v-if="error" class="text-sm text-red-600 mt-2">
+          <p class="text-sm text-red-600 mt-2 min-h-[20px]">
             {{ error }}
           </p>
+
           <label class="block text-sm font-medium text-gray-700"> Email </label>
           <input
             v-model="form.email"
