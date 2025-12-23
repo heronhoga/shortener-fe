@@ -35,7 +35,7 @@ const handleLogin = async () => {
 const handleGoogleCredential = async (response) => {
   try {
     await loginWithGoogle(response.credential)
-    router.push('/')
+    router.push('/links')
   } catch (e) {
     console.error(e)
   }
