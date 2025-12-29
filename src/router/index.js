@@ -3,8 +3,8 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import Links from '@/views/shortlink/Links.vue'
-import { getToken } from '@/utils/token'
 import Profile from '@/views/profile/Profile.vue'
+import api from '@/api'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,18 +36,20 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const isAuth = !!getToken()
+router.beforeEach(async (to, from, next) => {
+  if (!to.meta.requiresAuth) {
+    return next()
+  }
 
-  if (to.meta.requiresAuth && !isAuth) {
+  try {
+    await api.get('/users/me')
+    next()
+  } catch (err) {
     next({
       name: 'login',
       query: { redirect: to.fullPath }
     })
-    return
   }
-
-  next()
 })
 
 export default router
