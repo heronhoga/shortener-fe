@@ -33,14 +33,16 @@ const copyLink = async (url) => {
     <div class="mt-5 flex gap-3">
       <button
         @click="copyLink(link.url)"
-        class="px-3 py-1.5 text-sm rounded-md bg-gray-100 hover:bg-gray-200"
+        class="px-3 py-1.5 text-sm rounded-md bg-gray-400 hover:bg-gray-500 text-white"
       >
         Copy
       </button>
 
-      <button class="px-3 py-1.5 text-sm rounded-md bg-slate-100 hover:bg-slate-200">Edit</button>
+      <button class="px-3 py-1.5 text-sm rounded-md bg-cyan-400 hover:bg-cyan-500 text-white">
+        Edit
+      </button>
 
-      <button class="px-3 py-1.5 text-sm rounded-md bg-red-100 hover:bg-red-200 text-red-600">
+      <button class="px-3 py-1.5 text-sm rounded-md bg-red-400 hover:bg-red-500 text-white">
         Delete
       </button>
     </div>

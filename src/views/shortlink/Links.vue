@@ -20,6 +20,27 @@ onMounted(() => {
       url: 'https://sni.pe/xyz456',
       created_at: '2025-01-10',
       updated_at: '2025-01-18'
+    },
+    {
+      id: 3,
+      name: 'Instagram Bio',
+      url: 'https://sni.pe/xyz456',
+      created_at: '2025-01-10',
+      updated_at: '2025-01-18'
+    },
+    {
+      id: 4,
+      name: 'Instagram Bio',
+      url: 'https://sni.pe/xyz456',
+      created_at: '2025-01-10',
+      updated_at: '2025-01-18'
+    },
+    {
+      id: 5,
+      name: 'Instagram Bio',
+      url: 'https://sni.pe/xyz456',
+      created_at: '2025-01-10',
+      updated_at: '2025-01-18'
     }
   ]
 })
