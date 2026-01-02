@@ -1,15 +1,13 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 overflow-hidden">
-    <div class="text-center max-w-md px-6">
+    <div class="text-center px-6">
       <h1 class="text-4xl font-extrabold text-gray-900">Snipe</h1>
 
-      <p class="mt-4 text-gray-600">
-        Make the
-        <span class="italic"
-          >asfasfngso1akbnzjsdbesolrgaegaeigqaasasfsadvadvaefaeadvdaaskjbjdosbsepgeqirobeujogbshdbsjagjsbojsoib.com/kwaegbwuogwjbfo13?name=laasdwasgjhbgo305310bejkkdskjeszjsdbnkzsbdxdjgepgibqepjbosdlkgnsdlgbsoegsjlbgkxcmbxbsjldbgsjeghowesjglbsjogobswsdogjsogbobo</span
-        >
+      <p class="mt-4 text-gray-600">Make the</p>
+      <p class="italic text-gray-400">
+        asfasfngso1akbnzjsdbesolrgaegaeigqaasasfsadvadvaefaeadvdaaskjbjdosbsepgeqirobeujogbshdbsjagjsbojsoib.com/kwaegbwuogwjbfo13?name=laasdwasgjhbgo305310bejkkdskjeszjsdbnkzsbdxdjgepgibqepjbosdlkgnsdlgbsoegsjlbgkxcmbxbsjldbgsjeghowesjglbsjogobswsdogjsogbobo
       </p>
-      <p class="text-gray-600">to be <strong class="text-gray-900">SHORTER</strong></p>
+      <p class="text-gray-600">to be a <strong class="text-gray-900">SHORTER</strong> url.</p>
 
       <div class="mt-8 flex justify-center gap-4">
         <router-link

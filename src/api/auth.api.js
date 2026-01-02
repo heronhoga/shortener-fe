@@ -14,3 +14,7 @@ export const loginWithGoogleApi = (googleToken) => {
 export const registerApi = (payload) => {
   return api.post('/users/register', payload)
 }
+
+export const logoutApi =  () => {
+  return api.post('/users/logout', {})
+}

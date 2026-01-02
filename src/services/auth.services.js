@@ -1,4 +1,4 @@
-import { loginApi, loginWithGoogleApi, registerApi } from '@/api/auth.api'
+import { loginApi, loginWithGoogleApi, logoutApi, registerApi } from '@/api/auth.api'
 
 export const login = async (form) => {
   const { data } = await loginApi({
@@ -14,5 +14,10 @@ export const loginWithGoogle = async (googleToken) => {
 
 export const register = async (form) => {
   const response = await registerApi(form)
+  return response
+}
+
+export const logout = async () => {
+  const response = await logoutApi()
   return response
 }

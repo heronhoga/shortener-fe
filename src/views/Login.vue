@@ -55,8 +55,7 @@ onMounted(() => {
 
   google.accounts.id.renderButton(document.getElementById('google-btn'), {
     theme: 'outline',
-    size: 'large',
-    width: 320
+    size: 'large'
   })
 })
 </script>
@@ -114,7 +113,7 @@ onMounted(() => {
       </div>
 
       <!-- Google Auth -->
-      <div id="google-btn" class="w-full flex justify-center"></div>
+      <div id="google-btn" class="w-full min-w-[100px] md:min-w-[500px] flex justify-center"></div>
 
       <p class="mt-6 text-center text-sm text-gray-600">
         Don’t have an account?

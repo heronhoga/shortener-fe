@@ -90,7 +90,7 @@ const handleRegister = async () => {
             v-model="form.email"
             type="email"
             required
-            class="mt-1 p-2 w-full rounded-lg border focus:ring-slate-500 focus:border-slate-500"
+            class="mt-1 p-2 w-full md:min-w-[500px] rounded-lg border focus:ring-slate-500 focus:border-slate-500"
             :class="error ? 'border-red-500' : 'border-gray-300'"
             placeholder="you@example.com"
           />
