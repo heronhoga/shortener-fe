@@ -8,7 +8,7 @@ import { useNotificationStore } from '@/stores/notification'
 const router = useRouter()
 const loading = ref(false)
 const error = ref('')
-const notify = useNotificationStore() //notification
+const notify = useNotificationStore()
 
 const form = reactive({
   email: '',

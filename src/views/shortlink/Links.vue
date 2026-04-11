@@ -85,24 +85,21 @@ onMounted(() => {
       url: 'https://sni.pe/prod',
       created_at: '2025-01-07',
       updated_at: '2025-01-15'
-    },
+    }
   ]
 })
-
-/* ---------- computed ---------- */
 
 const filteredLinks = computed(() => {
   if (!search.value) return links.value
 
-  return links.value.filter(link =>
-    link.name.toLowerCase().includes(search.value.toLowerCase()) ||
-    link.url.toLowerCase().includes(search.value.toLowerCase())
+  return links.value.filter(
+    (link) =>
+      link.name.toLowerCase().includes(search.value.toLowerCase()) ||
+      link.url.toLowerCase().includes(search.value.toLowerCase())
   )
 })
 
-const totalPages = computed(() =>
-  Math.ceil(filteredLinks.value.length / perPage.value)
-)
+const totalPages = computed(() => Math.ceil(filteredLinks.value.length / perPage.value))
 
 const paginatedLinks = computed(() => {
   const start = (currentPage.value - 1) * perPage.value
@@ -120,7 +117,7 @@ const editLink = (link) => {
 }
 
 const deleteLink = (id) => {
-  links.value = links.value.filter(l => l.id !== id)
+  links.value = links.value.filter((l) => l.id !== id)
 }
 </script>
 
@@ -136,15 +133,6 @@ const deleteLink = (id) => {
         placeholder="Search links..."
         class="w-full md:w-64 px-3 py-2 border rounded-lg text-gray-900"
       />
-
-      <select
-        v-model="perPage"
-        class="w-32 px-3 py-2 border rounded-lg text-gray-900"
-      >
-        <option :value="5">5 / page</option>
-        <option :value="10">10 / page</option>
-        <option :value="20">20 / page</option>
-      </select>
     </div>
 
     <!-- Table -->
@@ -161,11 +149,7 @@ const deleteLink = (id) => {
         </thead>
 
         <tbody>
-          <tr
-            v-for="link in paginatedLinks"
-            :key="link.id"
-            class="border-t hover:bg-gray-50"
-          >
+          <tr v-for="link in paginatedLinks" :key="link.id" class="border-t hover:bg-gray-50">
             <td class="px-4 py-3 font-medium">
               {{ link.name }}
             </td>
@@ -212,15 +196,10 @@ const deleteLink = (id) => {
     </div>
 
     <!-- Empty -->
-    <div v-else class="text-center text-gray-500 mt-20">
-      No links found.
-    </div>
+    <div v-else class="text-center text-gray-500 mt-20">No links found.</div>
 
     <!-- Pagination -->
-    <div
-      v-if="totalPages > 1"
-      class="flex justify-center items-center gap-4 mt-6"
-    >
+    <div v-if="totalPages > 1" class="flex justify-center items-center gap-4 mt-6">
       <button
         class="px-3 py-1 border rounded disabled:opacity-50 text-gray-500"
         :disabled="currentPage === 1"
@@ -229,9 +208,7 @@ const deleteLink = (id) => {
         Prev
       </button>
 
-      <span class="text-sm text-gray-500">
-        Page {{ currentPage }} of {{ totalPages }}
-      </span>
+      <span class="text-sm text-gray-500"> Page {{ currentPage }} </span>
 
       <button
         class="px-3 py-1 border rounded disabled:opacity-50 text-gray-500"
