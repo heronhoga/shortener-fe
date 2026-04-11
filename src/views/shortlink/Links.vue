@@ -1,92 +1,24 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import LinksLayout from '@/layouts/LinksLayout.vue'
+import { getLinks } from '@/services/link.services'
 
 const links = ref([])
 const search = ref('')
 const currentPage = ref(1)
 const perPage = ref(5)
 
-onMounted(() => {
-  links.value = [
-    {
-      id: 1,
-      name: 'Landing Page',
-      url: 'https://sni.pe/abc123',
-      created_at: '2025-01-12',
-      updated_at: '2025-01-20'
-    },
-    {
-      id: 2,
-      name: 'Instagram Bio',
-      url: 'https://sni.pe/xyz456',
-      created_at: '2025-01-10',
-      updated_at: '2025-01-18'
-    },
-    {
-      id: 3,
-      name: 'Twitter Bio',
-      url: 'https://sni.pe/tw123',
-      created_at: '2025-01-09',
-      updated_at: '2025-01-17'
-    },
-    {
-      id: 4,
-      name: 'Portfolio',
-      url: 'https://sni.pe/port',
-      created_at: '2025-01-08',
-      updated_at: '2025-01-16'
-    },
-    {
-      id: 5,
-      name: 'Product Page',
-      url: 'https://sni.pe/prod',
-      created_at: '2025-01-07',
-      updated_at: '2025-01-15'
-    },
-    {
-      id: 6,
-      name: 'Product Page',
-      url: 'https://sni.pe/prod',
-      created_at: '2025-01-07',
-      updated_at: '2025-01-15'
-    },
-    {
-      id: 7,
-      name: 'Product Page',
-      url: 'https://sni.pe/prod',
-      created_at: '2025-01-07',
-      updated_at: '2025-01-15'
-    },
-    {
-      id: 8,
-      name: 'Product Page',
-      url: 'https://sni.pe/prod',
-      created_at: '2025-01-07',
-      updated_at: '2025-01-15'
-    },
-    {
-      id: 9,
-      name: 'Product Page',
-      url: 'https://sni.pe/prod',
-      created_at: '2025-01-07',
-      updated_at: '2025-01-15'
-    },
-    {
-      id: 10,
-      name: 'Product Page',
-      url: 'https://sni.pe/prod',
-      created_at: '2025-01-07',
-      updated_at: '2025-01-15'
-    },
-    {
-      id: 11,
-      name: 'Product Page',
-      url: 'https://sni.pe/prod',
-      created_at: '2025-01-07',
-      updated_at: '2025-01-15'
-    }
-  ]
+onMounted(async () => {
+  const param = {
+    page: currentPage.value,
+    per_page: perPage.value
+  }
+  try {
+    const response = await getLinks(param)
+    links.value = response.data
+  } catch (e) {
+    console.error('Failed to fetch links', e)
+  }
 })
 
 const filteredLinks = computed(() => {
@@ -141,7 +73,8 @@ const deleteLink = (id) => {
         <thead class="bg-gray-50">
           <tr>
             <th class="px-4 py-3 text-left text-sm font-semibold">Name</th>
-            <th class="px-4 py-3 text-left text-sm font-semibold">URL</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold">Shortened URL</th>
+            <th class="px-4 py-3 text-left text-sm font-semibold">Redirect URL</th>
             <th class="px-4 py-3 text-sm font-semibold">Created</th>
             <th class="px-4 py-3 text-sm font-semibold">Updated</th>
             <th class="px-4 py-3 text-sm font-semibold">Actions</th>
@@ -151,7 +84,13 @@ const deleteLink = (id) => {
         <tbody>
           <tr v-for="link in paginatedLinks" :key="link.id" class="border-t hover:bg-gray-50">
             <td class="px-4 py-3 font-medium">
-              {{ link.name }}
+              {{ link.label }}
+            </td>
+
+            <td class="px-4 py-3 text-blue-600 truncate max-w-xs">
+              <a :href="link.url" target="_blank" class="hover:underline">
+                localhost:8000/link/{{ link.name }}
+              </a>
             </td>
 
             <td class="px-4 py-3 text-blue-600 truncate max-w-xs">
@@ -161,11 +100,22 @@ const deleteLink = (id) => {
             </td>
 
             <td class="px-4 py-3 text-sm text-gray-600">
-              {{ link.created_at }}
+              {{
+                new Date(link.created_at).toLocaleDateString({
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })
+              }}
             </td>
-
             <td class="px-4 py-3 text-sm text-gray-600">
-              {{ link.updated_at }}
+              {{
+                new Date(link.updated_at).toLocaleDateString({
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })
+              }}
             </td>
 
             <td class="px-4 py-3">
